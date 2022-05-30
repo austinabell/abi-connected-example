@@ -6,14 +6,12 @@ import Form from "./components/Form";
 
 const BOATLOAD_OF_GAS = Big(3).times(10 ** 13).toFixed();
 
-const App = ({ contract, currentUser, nearConfig, wallet }) => {
+const App = ({ contract, currentUser, nearConfig, wallet, account }) => {
   const [status, setStatus] = useState(null);
 
   useEffect(async () => {
     if (currentUser) {
-      const status = await contract.get_status({
-        account_id: currentUser.accountId
-      });
+      const status = await contract.get_status(currentUser.accountId).view();
 
       setStatus(status);
     }
@@ -25,17 +23,10 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
     const { fieldset, message } = event.target.elements;
     fieldset.disabled = true;
 
-    await contract.set_status(
-      {
-        message: message.value,
-        account_id: currentUser.accountId
-      },
-      BOATLOAD_OF_GAS
-    );
+    await contract.set_status(message.value).callFrom(account, { gas: BOATLOAD_OF_GAS });
 
-    const status = await contract.get_status({
-      account_id: currentUser.accountId
-    });
+    const status = await contract.get_status(currentUser.accountId).view();
+
 
     setStatus(status);
 
@@ -46,7 +37,7 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
 
   const signIn = () => {
     wallet.requestSignIn(
-      {contractId: nearConfig.contractName, methodNames: ['set_status']},
+      { contractId: nearConfig.contractName, methodNames: ['set_status'] },
       "NEAR Status Message"
     );
   };
@@ -63,11 +54,11 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
 
         {currentUser ?
           <p>Currently signed in as: <code>{currentUser.accountId}</code></p>
-        :
+          :
           <p>Update or add a status message! Please login to continue.</p>
         }
 
-        { currentUser
+        {currentUser
           ? <button onClick={signOut}>Log out</button>
           : <button onClick={signIn}>Log in</button>
         }
@@ -89,7 +80,7 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
             </code>
           </p>
         </>
-      :
+        :
         <p>No status message yet!</p>
       }
     </main>
@@ -111,7 +102,9 @@ App.propTypes = {
   wallet: PropTypes.shape({
     requestSignIn: PropTypes.func.isRequired,
     signOut: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  // TODO this is probably wrong, just a hack to skip this strange API
+  // account: PropTypes.any().isRequired
 };
 
 export default App;

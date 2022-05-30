@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import getConfig from './config.js';
 import * as nearAPI from 'near-api-js';
+import { Contract } from 'near-abi-client';
+import abi from '../res/metadata.json';
 
 // Initializing contract
 async function initContract() {
@@ -19,7 +21,7 @@ async function initContract() {
 
   // Load in account data
   let currentUser;
-  if(walletConnection.getAccountId()) {
+  if (walletConnection.getAccountId()) {
     currentUser = {
       accountId: walletConnection.getAccountId(),
       balance: (await walletConnection.account().state()).amount
@@ -27,27 +29,20 @@ async function initContract() {
   }
 
   // Initializing our contract APIs by contract name and configuration
-  const contract = await new nearAPI.Contract(walletConnection.account(), nearConfig.contractName, {
-    // View methods are read-only – they don't modify the state, but usually return some value
-    viewMethods: ['get_status'],
-    // Change methods can modify the state, but you don't receive the returned value when called
-    changeMethods: ['set_status'],
-    // Sender is the account ID to initialize transactions.
-    // getAccountId() will return empty string if user is still unauthorized
-    sender: walletConnection.getAccountId()
-  });
+  const contract = new Contract(near.connection, nearConfig.contractName, abi);
 
-  return { contract, currentUser, nearConfig, walletConnection };
+  return { contract, currentUser, nearConfig, walletConnection, account: walletConnection.account() };
 }
 
 window.nearInitPromise = initContract()
-  .then(({ contract, currentUser, nearConfig, walletConnection }) => {
+  .then(({ contract, currentUser, nearConfig, walletConnection, account }) => {
     ReactDOM.render(
       <App
         contract={contract}
         currentUser={currentUser}
         nearConfig={nearConfig}
         wallet={walletConnection}
+        account={account}
       />,
       document.getElementById('root')
     );
