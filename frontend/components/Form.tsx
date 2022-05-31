@@ -1,11 +1,9 @@
 import React, { FormEventHandler } from 'react';
-import PropTypes from 'prop-types';
 
 interface FormData {
   onSubmit: FormEventHandler<HTMLFormElement>,
 }
 
-// TODO any
 export default function Form({ onSubmit }: FormData) {
   return (
     <form onSubmit={onSubmit}>
@@ -27,7 +25,3 @@ export default function Form({ onSubmit }: FormData) {
     </form>
   );
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
