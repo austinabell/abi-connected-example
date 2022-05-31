@@ -1,6 +1,6 @@
 const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 
-function getConfig(env) {
+export function getConfig(env: string) {
   switch(env) {
     case 'mainnet':
       return {
@@ -57,5 +57,3 @@ function getConfig(env) {
       throw Error(`Unconfigured environment '${env}'. Can be configured in frontend/config.js.`);
   }
 }
-
-module.exports = getConfig;

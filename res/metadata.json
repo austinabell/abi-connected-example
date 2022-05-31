@@ -1,0 +1,61 @@
+{
+  "metainfo": {
+    "name": "status-message",
+    "version": "0.1.0",
+    "authors": [
+      "Near Inc <hello@nearprotocol.com>"
+    ]
+  },
+  "schema_version": "0.0.1",
+  "methods": [
+    {
+      "name": "set_status",
+      "is_view": false,
+      "is_init": false,
+      "args": [
+        0
+      ],
+      "callbacks": [],
+      "callbacks_vec": [],
+      "result": null
+    },
+    {
+      "name": "get_status",
+      "is_view": true,
+      "is_init": false,
+      "args": [
+        1
+      ],
+      "callbacks": [],
+      "callbacks_vec": [],
+      "result": 2
+    }
+  ],
+  "types": [
+    {
+      "id": 0,
+      "schema": {
+        "title": "String",
+        "type": "string"
+      }
+    },
+    {
+      "id": 2,
+      "schema": {
+        "title": "Nullable_String",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "schema": {
+        "title": "AccountId",
+        "description": "Account identifier. This is the human readable utf8 string which is used internally to index accounts on the network and their respective state.\n\nBecause these IDs have to be validated, they have to be converted from a string with [`FromStr`] or [`TryFrom`] a compatible type. To skip validation on initialization, [`AccountId::new_unchecked`] can be used.\n\n# Examples ``` use near_sdk::AccountId; use std::convert::{TryFrom, TryInto};\n\n// `FromStr` conversion let alice: AccountId = \"alice.near\".parse().unwrap(); assert!(\"invalid.\".parse::<AccountId>().is_err());\n\nlet alice_string = \"alice\".to_string();\n\n// From string with validation let alice = AccountId::try_from(alice_string.clone()).unwrap(); let alice: AccountId = alice_string.try_into().unwrap();\n\n// Initialize without validating let alice_unchecked = AccountId::new_unchecked(\"alice\".to_string()); assert_eq!(alice, alice_unchecked); ```\n\n[`FromStr`]: std::str::FromStr",
+        "type": "string"
+      }
+    }
+  ]
+}

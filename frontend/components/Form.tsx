@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FormEventHandler } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Form({ onSubmit, currentUser }) {
+interface FormData {
+  onSubmit: FormEventHandler<HTMLFormElement>,
+}
+
+// TODO any
+export default function Form({ onSubmit }: FormData) {
   return (
     <form onSubmit={onSubmit}>
       <fieldset id="fieldset">
@@ -25,7 +30,4 @@ export default function Form({ onSubmit, currentUser }) {
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  currentUser: PropTypes.shape({
-    accountId: PropTypes.string.isRequired
-  })
 };
