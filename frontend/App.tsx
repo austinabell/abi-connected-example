@@ -3,7 +3,7 @@ import React, { useState, useEffect, FormEvent } from "react";
 import Big from "big.js";
 import Form from "./components/Form";
 import { Account, WalletConnection } from "near-api-js";
-import { Contract } from "near-abi-client";
+import { Contract, ABIFunction } from "near-abi-client";
 
 const BOATLOAD_OF_GAS = Big(3)
   .times(10 ** 13)
@@ -27,39 +27,39 @@ interface UndefinedContract extends Contract {
 }
 
 export default function App({ contract, wallet, account }: AppState) {
-  const [status, setStatus] = useState(null);
+  // const [status, setStatus] = useState(null);
 
-  useEffect(() => {
-    async function fetchStatus() {
-      if (account?.accountId) {
-        const status = await contract.get_status(account.accountId).view();
+  // useEffect(() => {
+  //   async function fetchStatus() {
+  //     if (account?.accountId) {
+  //       const status = await contract.get_status(account.accountId).view();
 
-        setStatus(status);
-      }
-    }
+  //       setStatus(status);
+  //     }
+  //   }
 
-    fetchStatus();
-  }, []);
+  //   fetchStatus();
+  // }, []);
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
 
-    const target = event.target as HTMLFormElement;
-    const { fieldset, message } = target.elements as FormElements;
-    fieldset.disabled = true;
+  //   const target = event.target as HTMLFormElement;
+  //   const { fieldset, message } = target.elements as FormElements;
+  //   fieldset.disabled = true;
 
-    await contract
-      .set_status(message.value)
-      .callFrom(account!, { gas: BOATLOAD_OF_GAS });
+  //   await contract
+  //     .set_status(message.value)
+  //     .callFrom(account!, { gas: BOATLOAD_OF_GAS });
 
-    const status = await contract.get_status(account!.accountId).view();
+  //   const status = await contract.get_status(account!.accountId).view();
 
-    setStatus(status);
+  //   setStatus(status);
 
-    message.value = "";
-    fieldset.disabled = false;
-    message.focus();
-  };
+  //   message.value = "";
+  //   fieldset.disabled = false;
+  //   message.focus();
+  // };
 
   const signIn = () => {
     wallet.requestSignIn(
@@ -72,6 +72,32 @@ export default function App({ contract, wallet, account }: AppState) {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
   };
+
+  function abiFnToField(fn: ABIFunction) {
+    const onSubmit = (e: React.SyntheticEvent) => {
+      e.preventDefault();
+
+      const target = e.target as typeof e.target & {
+        email: { value: string };
+        password: { value: string };
+      };
+    };
+    return (
+      <div>{fn.name}</div>
+      // <form onSubmit={onSubmit}>
+      //   <fieldset id="fieldset">
+      //     <p>{}</p>
+      //     <p className="highlight">
+      //       <label htmlFor="message">Message:</label>
+      //       <input autoComplete="off" autoFocus id="message" required />
+      //     </p>
+      //     <button type="submit">Update</button>
+      //   </fieldset>
+      // </form>
+    );
+  }
+
+  const forms = contract.abi?.methods.map((f) => abiFnToField(f));
 
   return (
     <main>
@@ -93,18 +119,8 @@ export default function App({ contract, wallet, account }: AppState) {
         )}
       </header>
 
-      {account?.accountId && <Form onSubmit={onSubmit} />}
-
-      {status ? (
-        <>
-          <p>Your current status:</p>
-          <p>
-            <code>{status}</code>
-          </p>
-        </>
-      ) : (
-        <p>No status message yet!</p>
-      )}
+      {account?.accountId && <div>{forms}</div>}
+      {/* {account?.accountId && <Form onSubmit={onSubmit} />} */}
     </main>
   );
 }
