@@ -1,8 +1,7 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::LookupMap;
-use near_sdk::{env, metadata, near_bindgen, AccountId};
+use near_sdk::{env, near_bindgen, AccountId};
 
-metadata! {
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct StatusMessage {
@@ -27,7 +26,6 @@ impl StatusMessage {
     pub fn get_status(&self, account_id: &AccountId) -> Option<String> {
         return self.records.get(&account_id);
     }
-}
 }
 
 #[cfg(not(target_arch = "wasm32"))]
