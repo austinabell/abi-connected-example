@@ -84,7 +84,6 @@ export default function App({ contract, wallet, account }: AppState) {
     );
   }
 
-  console.log(contract);
   const forms = contract.abi.abi.functions.map((f) => abiFnToField(f));
 
   return (
