@@ -3,7 +3,7 @@ import React, { useState, useEffect, FormEvent } from "react";
 import Big from "big.js";
 import Form from "./components/Form";
 import { Account, WalletConnection } from "near-api-js";
-import { Contract, ABIFunction } from "near-abi-client";
+import { Contract, ABIFunction } from "near-abi-client-js";
 
 
 // interface FormElements extends HTMLFormControlsCollection {
@@ -84,7 +84,8 @@ export default function App({ contract, wallet, account }: AppState) {
     );
   }
 
-  const forms = contract.abi?.methods.map((f) => abiFnToField(f));
+  console.log(contract);
+  const forms = contract.abi.abi.functions.map((f) => abiFnToField(f));
 
   return (
     <main>

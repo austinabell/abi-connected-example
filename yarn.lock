@@ -1934,6 +1934,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-buffer/-/json-buffer-3.0.0.tgz#85c1ff0f0948fc159810d4b5be35bf8c20875f64"
   integrity sha512-3YP80IxxFJB4b5tYC2SUPwkg0XQLiu0nWvhRgEatgjf+29IcWO9X1k8xRv5DGssJ/lCrjYTjQPcobJr2yWIVuQ==
 
+"@types/json-schema@^7.0.11":
+  version "7.0.11"
+  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
+  integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
+
 "@types/keyv@*":
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/@types/keyv/-/keyv-3.1.4.tgz#3ccdb1c6751b0c7e52300bcdacd5bcbf8faa75b6"
@@ -5797,10 +5802,11 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-"near-abi-client@https://github.com/austinabell/near-abi-client.git#main":
+"near-abi-client-js@https://github.com/near/near-abi-client-js.git#austin/init":
   version "0.1.0"
-  resolved "https://github.com/austinabell/near-abi-client.git#f9bd579a22f0b4dc65ccaf06fa2f515f55adcf4f"
+  resolved "https://github.com/near/near-abi-client-js.git#5f9cc92d20c72a328774899393579f0b7f4164c2"
   dependencies:
+    "@types/json-schema" "^7.0.11"
     near-api-js "^0.44.2"
 
 near-api-js@^0.44.1, near-api-js@^0.44.2:

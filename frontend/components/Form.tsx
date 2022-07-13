@@ -1,5 +1,5 @@
 import Big from "big.js";
-import { ABIFunction } from "near-abi-client";
+import { ABIFunction } from "near-abi-client-js";
 import { Account, WalletConnection } from "near-api-js";
 import React, { FormEvent, FormEventHandler, useState } from "react";
 import { UndefinedContract } from "../App";

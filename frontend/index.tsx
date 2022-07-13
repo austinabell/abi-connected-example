@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { getConfig } from './config';
 import * as nearAPI from 'near-api-js';
-import { Contract } from 'near-abi-client';
-import abi from '../res/metadata.json';
+import { ABI, Contract } from 'near-abi-client-js';
+import abi from '../res/abi.json';
 
 //* This is a workaround to allow fields to be attached to the global window, which are used
 //* with NEAR js API
@@ -32,7 +32,7 @@ async function initContract() {
   const walletConnection = new nearAPI.WalletConnection(near, null);
 
   // Initializing our contract APIs by contract name and configuration
-  const contract = new Contract(near.connection, nearConfig.contractName, abi);
+  const contract = new Contract(near.connection, nearConfig.contractName, abi as ABI);
 
   return { contract, walletConnection, account: walletConnection?.account() };
 }
