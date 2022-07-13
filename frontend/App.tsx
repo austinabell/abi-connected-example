@@ -5,14 +5,11 @@ import Form from "./components/Form";
 import { Account, WalletConnection } from "near-api-js";
 import { Contract, ABIFunction } from "near-abi-client";
 
-const BOATLOAD_OF_GAS = Big(3)
-  .times(10 ** 13)
-  .toFixed();
 
-interface FormElements extends HTMLFormControlsCollection {
-  fieldset: HTMLInputElement;
-  message: HTMLInputElement;
-}
+// interface FormElements extends HTMLFormControlsCollection {
+//   fieldset: HTMLInputElement;
+//   message: HTMLInputElement;
+// }
 
 interface AppState {
   contract: UndefinedContract;
@@ -20,7 +17,7 @@ interface AppState {
   account?: Account;
 }
 
-interface UndefinedContract extends Contract {
+export interface UndefinedContract extends Contract {
   // Allow any other types on the contract that are not defined.
   // This is ideally not needed when TS generated from ABI.
   [x: string]: any;
@@ -83,17 +80,7 @@ export default function App({ contract, wallet, account }: AppState) {
       };
     };
     return (
-      <div>{fn.name}</div>
-      // <form onSubmit={onSubmit}>
-      //   <fieldset id="fieldset">
-      //     <p>{}</p>
-      //     <p className="highlight">
-      //       <label htmlFor="message">Message:</label>
-      //       <input autoComplete="off" autoFocus id="message" required />
-      //     </p>
-      //     <button type="submit">Update</button>
-      //   </fieldset>
-      // </form>
+      <Form contract={contract} account={account} func={fn} />
     );
   }
 
