@@ -21,34 +21,43 @@ export default function Form({ contract, account, func }: FormParams) {
     const elements = target.elements as any;
     elements.fieldset.disabled = true;
 
+    let contract_fn = contract[func.name];
+
     // Collect all input from fields based on the order of params in ABI
     //? To be safe on this, we could assign it to an object. Order should be sufficient though
-    let params: any[] = func.params
-      ? func.params.map((p) => {
-          const value = elements[p.name].value;
-          if (p.type_schema.type === "integer") {
-            return parseInt(value);
-          } else if (p.type_schema.type === "string") {
-            // Return value as is, already a string.
-            return value;
-          } else {
-            return JSON.parse(value);
-          }
-        })
-      : [];
+    let call;
+    if (func.params) {
+      console.log("has params");
+      const params = func.params.map((p) => {
+        const value = elements[p.name].value;
+        if (p.type_schema.type === "integer") {
+          return parseInt(value);
+        } else if (p.type_schema.type === "string") {
+          // Return value as is, already a string.
+          return value;
+        } else {
+          return JSON.parse(value);
+        }
+      })
+      call = contract_fn(...params);
+    } else {
+      console.log("no params");
+      console.log(contract_fn);
+      call = contract_fn();
+    }
 
-    const method = contract[func.name](...params);
     let res;
     try {
       if (!func.is_view) {
-        res = await method.callFrom(account!, {
+        res = await call.callFrom(account!, {
           gas: TX_GAS,
         });
       } else {
-        res = await method.view();
+        res = await call.view();
       }
       setOut(res);
     } catch (e: any) {
+      console.error(e);
       setOut(`ERROR: ${e}`);
     }
 

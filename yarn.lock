@@ -5804,7 +5804,7 @@ nanomatch@^1.2.9:
 
 "near-abi-client-js@https://github.com/near/near-abi-client-js.git#austin/init":
   version "0.1.0"
-  resolved "https://github.com/near/near-abi-client-js.git#5f9cc92d20c72a328774899393579f0b7f4164c2"
+  resolved "https://github.com/near/near-abi-client-js.git#85ccd0c3d3ced134ad440f7cbbe05aa6fdbe2adc"
   dependencies:
     "@types/json-schema" "^7.0.11"
     near-api-js "^0.44.2"

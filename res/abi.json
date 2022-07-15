@@ -31,6 +31,21 @@
         ]
       },
       {
+        "name": "get_accounts",
+        "is_view": true,
+        "result": {
+          "type_schema": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "serialization_type": "json"
+        }
+      },
+      {
         "name": "get_amount",
         "is_view": true,
         "params": [
