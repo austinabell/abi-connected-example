@@ -14,7 +14,7 @@ export default function App({ contract, wallet, account }: AppState) {
   const signIn = () => {
     wallet.requestSignIn(
       { contractId: contract.contractId, methodNames: ["set_status"] },
-      "NEAR Status Message"
+      "NEAR ABI"
     );
   };
 
@@ -34,7 +34,7 @@ export default function App({ contract, wallet, account }: AppState) {
   return (
     <main>
       <header>
-        <h1>NEAR Status Message</h1>
+        <h1>NEAR ABI</h1>
 
         {account?.accountId ? (
           <p>
