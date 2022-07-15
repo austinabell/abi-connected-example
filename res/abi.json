@@ -10,13 +10,34 @@
   "abi": {
     "functions": [
       {
-        "name": "get_status",
+        "name": "add",
+        "params": [
+          {
+            "name": "name",
+            "type_schema": {
+              "type": "string"
+            },
+            "serialization_type": "json"
+          },
+          {
+            "name": "amount",
+            "type_schema": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "serialization_type": "json"
+          }
+        ]
+      },
+      {
+        "name": "get_amount",
         "is_view": true,
         "params": [
           {
-            "name": "account_id",
+            "name": "name",
             "type_schema": {
-              "$ref": "#/definitions/AccountId"
+              "type": "string"
             },
             "serialization_type": "json"
           }
@@ -24,36 +45,20 @@
         "result": {
           "type_schema": {
             "type": [
-              "string",
+              "integer",
               "null"
-            ]
+            ],
+            "format": "uint64",
+            "minimum": 0.0
           },
           "serialization_type": "json"
         }
-      },
-      {
-        "name": "set_status",
-        "params": [
-          {
-            "name": "message",
-            "type_schema": {
-              "type": "string"
-            },
-            "serialization_type": "json"
-          }
-        ]
       }
     ],
     "root_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "String",
-      "type": "string",
-      "definitions": {
-        "AccountId": {
-          "description": "Account identifier. This is the human readable utf8 string which is used internally to index accounts on the network and their respective state.\n\nBecause these IDs have to be validated, they have to be converted from a string with [`FromStr`] or [`TryFrom`] a compatible type. To skip validation on initialization, [`AccountId::new_unchecked`] can be used.\n\n# Examples ``` use near_sdk::AccountId; use std::convert::{TryFrom, TryInto};\n\n// `FromStr` conversion let alice: AccountId = \"alice.near\".parse().unwrap(); assert!(\"invalid.\".parse::<AccountId>().is_err());\n\nlet alice_string = \"alice\".to_string();\n\n// From string with validation let alice = AccountId::try_from(alice_string.clone()).unwrap(); let alice: AccountId = alice_string.try_into().unwrap();\n\n// Initialize without validating let alice_unchecked = AccountId::new_unchecked(\"alice\".to_string()); assert_eq!(alice, alice_unchecked); ```\n\n[`FromStr`]: std::str::FromStr",
-          "type": "string"
-        }
-      }
+      "type": "string"
     }
   }
 }

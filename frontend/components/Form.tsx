@@ -24,7 +24,17 @@ export default function Form({ contract, account, func }: FormParams) {
     // Collect all input from fields based on the order of params in ABI
     //? To be safe on this, we could assign it to an object. Order should be sufficient though
     let params: any[] = func.params
-      ? func.params.map((p) => elements[p.name].value)
+      ? func.params.map((p) => {
+          const value = elements[p.name].value;
+          if (p.type_schema.type === "integer") {
+            return parseInt(value);
+          } else if (p.type_schema.type === "string") {
+            // Return value as is, already a string.
+            return value;
+          } else {
+            return JSON.parse(value);
+          }
+        })
       : [];
 
     const method = contract[func.name](...params);
@@ -48,11 +58,22 @@ export default function Form({ contract, account, func }: FormParams) {
   func.params;
 
   const paramToField = (param: ABIParameterInfo) => {
+    let label = "JSON";
+    let field_type = "text";
+    // Only changing field if a number, just for PoC, can be more robust.
+    // Changes label to indicate what form is expecting.
+    if (param.type_schema.type === "integer") {
+      field_type = "number";
+      label = "int";
+    } else if (param.type_schema.type === "string") {
+      label = "string";
+    }
+
     return (
       <p className="highlight" key={param.name}>
         <label htmlFor="message">{param.name}</label>
         {/* TODO change this from just string input */}
-        <input autoComplete="off" autoFocus id={param.name} />
+        <input type={field_type} autoComplete="off" autoFocus id={param.name} />
       </p>
     );
   };

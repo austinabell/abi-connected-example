@@ -41,7 +41,7 @@ export default function App({ contract, wallet, account }: AppState) {
             Currently signed in as: <code>{account?.accountId}</code>
           </p>
         ) : (
-          <p>Update or add a status message! Please login to continue.</p>
+          <p>Please login to continue.</p>
         )}
 
         {account?.accountId ? (
