@@ -93,7 +93,7 @@ export default function Form({ contract, account, func }: FormParams) {
         <p>{func.name}</p>
         {func.params ? func.params.map((p) => paramToField(p)) : undefined}
         <button type="submit">{func.is_view ? "View" : "Call"}</button>
-        <p>{out}</p>
+        <p>{out ? JSON.stringify(out) : undefined}</p>
       </fieldset>
     </form>
   );
