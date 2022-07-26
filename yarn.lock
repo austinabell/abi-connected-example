@@ -5802,9 +5802,9 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-"near-abi-client-js@https://github.com/near/near-abi-client-js.git#austin/init":
+"near-abi-client-js@https://github.com/near/near-abi-client-js.git":
   version "0.1.0"
-  resolved "https://github.com/near/near-abi-client-js.git#426a98f62e26c1797227cb608f68559cb6f8ec41"
+  resolved "https://github.com/near/near-abi-client-js.git#0c7ce94cfbcf84f08864a2993b1c2297ac8b50c4"
   dependencies:
     "@types/json-schema" "^7.0.11"
     near-api-js "^0.44.2"

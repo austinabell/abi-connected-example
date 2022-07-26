@@ -36,7 +36,7 @@
     "big.js": "^5.2.2",
     "borsh": "^0.4.0",
     "env-cmd": "^10.1.0",
-    "near-abi-client-js": "https://github.com/near/near-abi-client-js.git#austin/init",
+    "near-abi-client-js": "https://github.com/near/near-abi-client-js.git",
     "near-api-js": "^0.44.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
