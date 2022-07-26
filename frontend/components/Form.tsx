@@ -27,7 +27,6 @@ export default function Form({ contract, account, func }: FormParams) {
     //? To be safe on this, we could assign it to an object. Order should be sufficient though
     let call;
     if (func.params) {
-      console.log("has params");
       const params = func.params.map((p) => {
         const value = elements[p.name].value;
         if (p.type_schema.type === "integer") {
@@ -41,8 +40,6 @@ export default function Form({ contract, account, func }: FormParams) {
       })
       call = contract_fn(...params);
     } else {
-      console.log("no params");
-      console.log(contract_fn);
       call = contract_fn();
     }
 
