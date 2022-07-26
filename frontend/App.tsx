@@ -12,8 +12,9 @@ interface AppState {
 
 export default function App({ contract, wallet, account }: AppState) {
   const signIn = () => {
+    const names: string[] = contract.abi.abi.functions.map((f) => f.name);
     wallet.requestSignIn(
-      { contractId: contract.contractId, methodNames: ["set_status"] },
+      { contractId: contract.contractId, methodNames: names },
       "NEAR ABI"
     );
   };
